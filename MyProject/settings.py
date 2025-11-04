@@ -46,16 +46,29 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',  # Keep only one instance of CsrfViewMiddleware
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'MyProject.urls'
-CORS_ALLOW_ALL_ORIGINS = True
+
+# Add trusted origins for CSRF (frontend will be added later when ready)
+CSRF_TRUSTED_ORIGINS = [
+    'https://laboratory-activity-2-backend.onrender.com',
+    # Add frontend domain here once it's available, e.g.,
+    # 'https://your-frontend-domain.com',
+]
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # Change to False in production
+CORS_ALLOWED_ORIGINS = [
+    'https://laboratory-activity-2-backend.onrender.com',
+    # Add frontend domain here once it's available
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -106,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://laboratory-activity-2-backend.onrender.com',
-    #frontend link here
+    # Add frontend link here when available
 ]
 
 # Internationalization
