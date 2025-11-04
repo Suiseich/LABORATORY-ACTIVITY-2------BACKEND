@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-v3us$9a_-mhmeu+63l8f-p3gvcl#b+yxgjj+81xy=-fc@*p3_g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http//127.0.0.1:8000','127.0.0.1:8000','127.0.0.1','http://172.19.128.1:8000', '172.19.128.1:8000', '172.19.128.1', 'https://laboratory-activity-2-backend.onrender.com','laboratory-activity-2-backend.onrender.com']
+ALLOWED_HOSTS = ['http//127.0.0.1:8000','127.0.0.1:8000','127.0.0.1','http://172.19.128.1:8000', '172.19.128.1:8000', '172.19.128.1', 'https://laboratory-activity-2-backend.onrender.com','laboratory-activity-2-backend.onrender.com', 'https://snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend', 'laboratory-activity-2-backend.onrender.com','laboratory-activity-2-backend.onrender.com', 'https://snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend']
 
 
 # Application definition
@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',  # Keep only one instance of CsrfViewMiddleware
+    'django.middleware.csrf.CsrfViewMiddleware',  
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -55,18 +55,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'MyProject.urls'
 
-# Add trusted origins for CSRF (frontend will be added later when ready)
+
 CSRF_TRUSTED_ORIGINS = [
     'https://laboratory-activity-2-backend.onrender.com',
-    # Add frontend domain here once it's available, e.g.,
-    # 'https://your-frontend-domain.com',
+    'laboratory-activity-2-backend.onrender.com',
+    'https://snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
+    'snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
 ]
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # Change to False in production
+CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOWED_ORIGINS = [
     'https://laboratory-activity-2-backend.onrender.com',
-    # Add frontend domain here once it's available
+    'laboratory-activity-2-backend.onrender.com',
+    'https://snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
+    'snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
 ]
 
 TEMPLATES = [
