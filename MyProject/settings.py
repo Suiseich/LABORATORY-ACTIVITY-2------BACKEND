@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'MyProject.urls'
@@ -102,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://laboratory-activity-2-backend.onrender.com',
+    #frontend link here
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
