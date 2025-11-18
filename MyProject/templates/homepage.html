@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Homepage — User Registration Demo</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f7f9fc;
+        text-align: center;
+        padding: 50px;
+      }
+      .btn {
+        padding: 12px 20px;
+        background: #2b6cb0;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to the User Registration Demo</h1>
+    <p></p>
+    <a href="{% url 'registration:login_html' %}" class="btn">Go to Login</a>
+  </body>
+</html>

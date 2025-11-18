@@ -67,15 +67,12 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True  
 CORS_ALLOWED_ORIGINS = [
     'https://laboratory-activity-2-backend.onrender.com',
-    'laboratory-activity-2-backend.onrender.com',
-    'https://snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
-    'snack.expo.dev/@suiseich/github.com-suiseich-laboratory-activty-2---frontend',
 ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'MyProject' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

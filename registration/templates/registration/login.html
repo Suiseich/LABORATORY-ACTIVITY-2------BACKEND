@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: #f5f7fb;
+      }
+      .card {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        width: 320px;
+      }
+      .field {
+        margin-bottom: 12px;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        background: #2b6cb0;
+        color: white;
+        font-weight: 600;
+      }
+      .error {
+        color: #b00020;
+        margin-bottom: 10px;
+      }
+      a {
+        text-decoration: none;
+        color: #2b6cb0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Sign in</h2>
+
+      {% if messages %} {% for msg in messages %}
+      <div class="error">{{ msg }}</div>
+      {% endfor %} {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="field">
+          <label>Email</label>
+          <input
+            name="email"
+            type="text"
+            value="{{ email|default:'' }}"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input name="password" type="password" required />
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p style="margin-top: 10px; text-align: center">
+        <a href="{% url 'registration:login_html' %}">Back to homepage</a>
+      </p>
+    </div>
+  </body>
+</html>
