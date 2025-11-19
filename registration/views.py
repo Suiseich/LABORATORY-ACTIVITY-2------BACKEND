@@ -47,13 +47,13 @@ def user_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 def login_view(request):
-    # GET: show login or redirect if already logged in
+    
     if request.method == "GET":
         if request.session.get("user_id"):
             return redirect('registration:users_html')
         return render(request, 'registration/login.html')
 
-    # POST: authenticate by email/password
+    
     email = request.POST.get('email', '').strip()
     password = request.POST.get('password', '')
 
@@ -67,13 +67,13 @@ def login_view(request):
         messages.error(request, "Invalid credentials.")
         return render(request, 'registration/login.html', {'email': email})
 
-    # If password is hashed
+    
     if check_password(password, user.password):
         request.session['user_id'] = user.id
         request.session['user_name'] = f"{user.first_name} {user.last_name}"
         return redirect('registration:users_html')
 
-    # If stored as plain text, hash and save once
+    
     if user.password == password:
         user.password = make_password(password)
         user.save(update_fields=['password'])
@@ -88,7 +88,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('registration:login_html')
 
-# Simple decorator to require a session login
+
 def login_required_view(fn):
     def wrapper(request, *args, **kwargs):
         if not request.session.get("user_id"):
@@ -104,4 +104,3 @@ def users_html(request):
     current_user = request.session.get('user_name', 'Unknown')
     return render(request, 'registration/users_list.html', {'users': users, 'current_user': current_user})
 
-# Prevent caching of login
