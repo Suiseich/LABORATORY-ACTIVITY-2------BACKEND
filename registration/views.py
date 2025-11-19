@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import check_password, make_password
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
+from urllib.parse import quote
 
 from .models import UserRegistration
 from .serializers import UserRegistrationSerializer
@@ -48,51 +49,53 @@ def user_detail(request, pk):
 
 def login_view(request):
     
+    next_param = request.GET.get('next', '')
+
     if request.method == "GET":
         if request.session.get("user_id"):
             return redirect('registration:users_html')
-        return render(request, 'registration/login.html')
+        return render(request, 'registration/login.html', {'next': next_param})
 
     
+    post_next = request.POST.get('next') or request.GET.get('next') or ''
     email = request.POST.get('email', '').strip()
     password = request.POST.get('password', '')
 
     if not email or not password:
         messages.error(request, "Enter both email and password.")
-        return render(request, 'registration/login.html', {'email': email})
+        return render(request, 'registration/login.html', {'email': email, 'next': post_next})
 
     try:
         user = UserRegistration.objects.get(email=email)
     except UserRegistration.DoesNotExist:
         messages.error(request, "Invalid credentials.")
-        return render(request, 'registration/login.html', {'email': email})
+        return render(request, 'registration/login.html', {'email': email, 'next': post_next})
 
-    
     if check_password(password, user.password):
         request.session['user_id'] = user.id
         request.session['user_name'] = f"{user.first_name} {user.last_name}"
-        return redirect('registration:users_html')
+        return redirect(post_next) if post_next else redirect('registration:users_html')
 
-    
     if user.password == password:
         user.password = make_password(password)
         user.save(update_fields=['password'])
         request.session['user_id'] = user.id
         request.session['user_name'] = f"{user.first_name} {user.last_name}"
-        return redirect('registration:users_html')
+        return redirect(post_next) if post_next else redirect('registration:users_html')
 
     messages.error(request, "Invalid credentials.")
-    return render(request, 'registration/login.html', {'email': email})
+    return render(request, 'registration/login.html', {'email': email, 'next': post_next})
 
 def logout_view(request):
     request.session.flush()
     return redirect('registration:login_html')
 
-
 def login_required_view(fn):
     def wrapper(request, *args, **kwargs):
         if not request.session.get("user_id"):
-            return redirect('registration:login_html')
+            login_url = reverse('registration:login_html')
+            next_path = quote(request.get_full_path(), safe='')
+            return redirect(f"{login_url}?next={next_path}")
         return fn(request, *args, **kwargs)
     wrapper.__name__ = fn.__name__
     return wrapper
@@ -103,4 +106,3 @@ def users_html(request):
     users = UserRegistration.objects.all()
     current_user = request.session.get('user_name', 'Unknown')
     return render(request, 'registration/users_list.html', {'users': users, 'current_user': current_user})
-
